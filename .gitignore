@@ -1,0 +1,9 @@
+# macOS and Python noise
+.DS_Store
+__pycache__/
+*.pyc
+
+# Private local app data
+awakening-system/.env
+awakening-system/data/user_settings.json
+

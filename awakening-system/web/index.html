@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Awakening System</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+
+    <section class="login-screen" id="login-screen">
+      <form class="login-panel" id="login-form">
+        <p class="eyebrow">Sandbox Access</p>
+        <h1>Awakening System</h1>
+        <p class="subtitle">Use the demo gate to enter the public portfolio version.</p>
+        <label>
+          <span>Hunter ID</span>
+          <input id="login-user" type="text" autocomplete="username" placeholder="demo">
+        </label>
+        <label>
+          <span>Access Code</span>
+          <input id="login-pass" type="password" autocomplete="current-password" placeholder="demo">
+        </label>
+        <p class="login-error" id="login-error"></p>
+        <button type="submit">Enter System</button>
+        <p class="login-note">Sandbox only. Production authentication should use Supabase Auth.</p>
+      </form>
+    </section>
+    <main class="system-shell is-hidden" id="app-shell">
+      <section class="system-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">System Notice</p>
+            <span class="status-pill" id="quest-status">Loading</span>
+          </div>
+          <div class="header-controls">
+            <button class="icon-button" id="logout-button" type="button" aria-label="Log out of sandbox">
+              <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <path d="M16 17l5-5-5-5"></path>
+                <path d="M21 12H9"></path>
+              </svg>
+            </button>
+            <button class="icon-button" id="open-settings" type="button" aria-label="Open system configuration">
+              <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z"></path>
+                <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 8.97 19.35a1.7 1.7 0 0 0-1.88.34l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.65 8.94a1.7 1.7 0 0 0-.34-1.88l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.88.34A1.7 1.7 0 0 0 10.05 3V3a2 2 0 0 1 4 0v.09a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.45 9a1.7 1.7 0 0 0 1.56 1.03H21a2 2 0 0 1 0 4h-.09A1.7 1.7 0 0 0 19.4 15Z"></path>
+              </svg>
+            </button>
+            <button class="rank-badge" id="open-rank" type="button">Rank E</button>
+          </div>
+        </div>
+
+        <h1 id="quest-title">Daily Quest</h1>
+        <p class="subtitle">Complete the assigned training before the gate closes.</p>
+
+        <div class="status-grid">
+          <article>
+            <span>Time Remaining</span>
+            <strong id="countdown">--:--:--</strong>
+          </article>
+          <article>
+            <span>Progress</span>
+            <strong id="progress">0/0</strong>
+          </article>
+          <article>
+            <span>Focus</span>
+            <strong id="quest-focus">--</strong>
+          </article>
+        </div>
+
+        <section class="timer-panel" id="timer-panel">
+          <div>
+            <span class="timer-label">Quest Timer</span>
+            <strong id="timer-current">Ready</strong>
+            <p id="timer-detail">Start the circuit when you are ready.</p>
+          </div>
+          <div class="timer-readout" id="timer-readout">00:00</div>
+          <div class="timer-actions">
+            <button id="timer-play" type="button">Play</button>
+            <button id="timer-next" type="button">Next</button>
+            <button id="timer-reset" type="button">Reset</button>
+          </div>
+        </section>
+
+        <div class="quest-list" id="quest-list"></div>
+
+        <div class="panel-actions">
+          <button id="reset-progress" type="button">Reset Progress</button>
+          <button id="complete-quest" type="button">Complete Quest</button>
+        </div>
+      </section>
+
+      <dialog class="settings-dialog" id="settings-dialog">
+        <form class="settings-panel" id="settings-form" method="dialog">
+          <div class="settings-header">
+            <div>
+              <p class="eyebrow">System Configuration</p>
+              <h2>Quest Protocol</h2>
+            </div>
+            <button class="icon-button" id="close-settings" type="button" aria-label="Close system configuration">
+              <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+            </button>
+          </div>
+
+          <div class="settings-grid">
+            <label>
+              <span>Email</span>
+              <input id="setting-email" name="email" type="email" placeholder="you@example.com">
+            </label>
+            <label>
+              <span>Exercises per email</span>
+              <input id="setting-exercises" name="exercisesPerEmail" type="number" min="1" max="12" step="1">
+            </label>
+            <label>
+              <span>Times per week</span>
+              <input id="setting-frequency" name="timesPerWeek" type="number" min="1" max="4" step="1">
+            </label>
+            <label>
+              <span>Weight</span>
+              <input id="setting-weight" name="weightKg" type="number" min="30" max="250" step="0.1" placeholder="kg">
+            </label>
+            <label>
+              <span>Height</span>
+              <input id="setting-height" name="heightCm" type="number" min="100" max="230" step="0.1" placeholder="cm">
+            </label>
+            <div class="bmi-card">
+              <span>Training Calibration</span>
+              <strong id="bmi-value">--</strong>
+              <p id="bmi-note">Add weight and height to estimate intensity.</p>
+            </div>
+          </div>
+
+          <fieldset class="settings-choice-group">
+            <legend>Available Equipment</legend>
+            <div class="choice-grid" id="equipment-options"></div>
+          </fieldset>
+
+          <fieldset class="settings-choice-group">
+            <legend>Training Pool</legend>
+            <div class="choice-grid" id="training-options"></div>
+          </fieldset>
+
+          <fieldset class="settings-choice-group">
+            <legend>Training Style</legend>
+            <div class="choice-grid" id="style-options"></div>
+          </fieldset>
+
+          <div class="panel-actions">
+            <button id="clear-settings" type="button">Clear</button>
+            <button type="submit">Save Protocol</button>
+          </div>
+        </form>
+      </dialog>
+
+      <dialog class="rank-dialog" id="rank-dialog">
+        <section class="rank-panel">
+          <div class="settings-header">
+            <div>
+              <p class="eyebrow">Hunter Profile</p>
+              <h2 id="rank-title">Rank E</h2>
+            </div>
+            <button class="icon-button" id="close-rank" type="button" aria-label="Close rank profile">
+              <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+            </button>
+          </div>
+
+          <canvas id="attribute-chart" width="360" height="360" aria-label="Training attributes radar chart"></canvas>
+          <div class="attribute-grid" id="attribute-grid"></div>
+        </section>
+      </dialog>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,632 @@
+[
+  {
+    "id": "push-up",
+    "name": "Push Up",
+    "muscle_group": "chest",
+    "training_types": ["arms", "core", "strength"],
+    "workout_styles": ["strength", "conditioning"],
+    "difficulty": "beginner",
+    "equipment": "bodyweight",
+    "sets": 4,
+    "reps": "10-15",
+    "instructions": [
+      "Place your hands under your shoulders.",
+      "Keep your body straight from shoulders to ankles.",
+      "Lower with control, then push back to the starting position."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "bodyweight-squat",
+    "name": "Bodyweight Squat",
+    "muscle_group": "legs",
+    "training_types": ["legs", "endurance", "strength"],
+    "workout_styles": ["strength", "conditioning"],
+    "difficulty": "beginner",
+    "equipment": "bodyweight",
+    "sets": 4,
+    "reps": "12-20",
+    "instructions": [
+      "Stand with your feet roughly shoulder-width apart.",
+      "Lower your hips while keeping your chest lifted.",
+      "Drive through your feet to stand tall again."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "plank",
+    "name": "Plank",
+    "muscle_group": "core",
+    "training_types": ["core", "endurance"],
+    "workout_styles": ["mobility", "conditioning", "yoga"],
+    "difficulty": "beginner",
+    "equipment": "bodyweight",
+    "sets": 3,
+    "reps": "30-45 sec",
+    "instructions": [
+      "Place your elbows under your shoulders.",
+      "Brace your core and keep your hips level.",
+      "Hold the position without letting your lower back collapse."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "walking-lunge",
+    "name": "Walking Lunge",
+    "muscle_group": "legs",
+    "training_types": ["legs", "endurance", "strength"],
+    "workout_styles": ["strength", "conditioning"],
+    "difficulty": "intermediate",
+    "equipment": "bodyweight",
+    "sets": 3,
+    "reps": "10 each leg",
+    "instructions": [
+      "Step forward and lower until both knees bend.",
+      "Keep your front knee tracking over your foot.",
+      "Push through the front foot and step into the next rep."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "mountain-climber",
+    "name": "Mountain Climber",
+    "muscle_group": "cardio",
+    "training_types": ["core", "endurance", "cardio"],
+    "workout_styles": ["hiit", "conditioning"],
+    "difficulty": "intermediate",
+    "equipment": "bodyweight",
+    "sets": 4,
+    "reps": "30 sec",
+    "instructions": [
+      "Start in a high plank position.",
+      "Drive one knee toward your chest, then switch legs.",
+      "Keep your shoulders stable and move at a steady pace."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "triceps-dip",
+    "name": "Triceps Dip",
+    "muscle_group": "arms",
+    "training_types": ["arms", "strength"],
+    "workout_styles": ["strength"],
+    "difficulty": "beginner",
+    "equipment": "bench",
+    "sets": 3,
+    "reps": "8-12",
+    "instructions": [
+      "Place your hands on a stable bench behind your hips.",
+      "Lower your body with control by bending your elbows.",
+      "Press through your hands to return to the starting position."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "bicycle-crunch",
+    "name": "Bicycle Crunch",
+    "muscle_group": "core",
+    "training_types": ["core", "endurance"],
+    "workout_styles": ["conditioning"],
+    "difficulty": "beginner",
+    "equipment": "bodyweight",
+    "sets": 3,
+    "reps": "16-24",
+    "instructions": [
+      "Lie on your back with your knees raised.",
+      "Rotate your torso while bringing opposite elbow and knee closer.",
+      "Move steadily without pulling on your neck."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "jumping-jack",
+    "name": "Jumping Jack",
+    "muscle_group": "cardio",
+    "training_types": ["cardio", "endurance"],
+    "workout_styles": ["hiit", "conditioning"],
+    "difficulty": "beginner",
+    "equipment": "bodyweight",
+    "sets": 4,
+    "reps": "30 sec",
+    "instructions": [
+      "Stand tall with arms by your sides.",
+      "Jump your feet out while raising your arms overhead.",
+      "Return to the starting position and repeat at a steady rhythm."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "burpee",
+    "name": "Burpee",
+    "muscle_group": "full body",
+    "training_types": ["cardio", "endurance", "strength"],
+    "workout_styles": ["hiit", "conditioning"],
+    "difficulty": "intermediate",
+    "equipment": "bodyweight",
+    "sets": 3,
+    "reps": "6-10",
+    "instructions": [
+      "Squat down and place your hands on the floor.",
+      "Jump back into a plank, then return your feet under your hips.",
+      "Stand or jump upward to complete the rep."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "glute-bridge",
+    "name": "Glute Bridge",
+    "muscle_group": "legs",
+    "training_types": ["legs", "core", "strength"],
+    "workout_styles": ["strength", "mobility"],
+    "difficulty": "beginner",
+    "equipment": "bodyweight",
+    "sets": 3,
+    "reps": "12-18",
+    "instructions": [
+      "Lie on your back with your knees bent and feet planted.",
+      "Drive through your heels and lift your hips.",
+      "Squeeze your glutes at the top, then lower with control."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "pike-push-up",
+    "name": "Pike Push Up",
+    "muscle_group": "shoulders",
+    "training_types": ["arms", "strength"],
+    "workout_styles": ["strength"],
+    "difficulty": "intermediate",
+    "equipment": "bodyweight",
+    "sets": 3,
+    "reps": "6-10",
+    "instructions": [
+      "Start with your hips high and hands planted firmly.",
+      "Lower the top of your head toward the floor.",
+      "Press back up while keeping control through your shoulders."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "brisk-walk",
+    "name": "Brisk Walk",
+    "muscle_group": "cardio",
+    "training_types": ["cardio", "endurance"],
+    "workout_styles": ["conditioning", "mobility"],
+    "difficulty": "beginner",
+    "equipment": "bodyweight",
+    "sets": 1,
+    "reps": "20 min",
+    "instructions": [
+      "Walk at a pace that raises your breathing while still allowing short conversation.",
+      "Keep your shoulders relaxed and arms moving naturally.",
+      "Maintain steady effort for the full duration."
+    ],
+    "source": "CDC physical activity guidance",
+    "source_url": "https://www.cdc.gov/physical-activity-basics/measuring/index.html"
+  },
+  {
+    "id": "treadmill-walk",
+    "name": "Treadmill Walk",
+    "muscle_group": "cardio",
+    "training_types": ["cardio", "endurance"],
+    "workout_styles": ["conditioning"],
+    "difficulty": "beginner",
+    "equipment": "treadmill",
+    "sets": 1,
+    "reps": "20 min",
+    "instructions": [
+      "Start at a comfortable speed.",
+      "Keep your posture tall and avoid leaning on the rails.",
+      "Increase incline or pace slightly if the effort feels too easy."
+    ],
+    "source": "CDC physical activity guidance",
+    "source_url": "https://www.cdc.gov/physical-activity-basics/adding-adults/what-counts.html"
+  },
+  {
+    "id": "stationary-bike",
+    "name": "Stationary Bike",
+    "muscle_group": "cardio",
+    "training_types": ["cardio", "endurance", "legs"],
+    "workout_styles": ["conditioning"],
+    "difficulty": "beginner",
+    "equipment": "bike",
+    "sets": 1,
+    "reps": "20 min",
+    "instructions": [
+      "Set the seat height so your knee stays slightly bent at the bottom of the pedal stroke.",
+      "Pedal at a steady cadence with light to moderate resistance.",
+      "Keep your upper body relaxed."
+    ],
+    "source": "CDC physical activity guidance",
+    "source_url": "https://www.cdc.gov/physical-activity-basics/measuring/index.html"
+  },
+  {
+    "id": "outdoor-bike",
+    "name": "Outdoor Bike Ride",
+    "muscle_group": "cardio",
+    "training_types": ["cardio", "endurance", "legs"],
+    "workout_styles": ["conditioning"],
+    "difficulty": "beginner",
+    "equipment": "bike",
+    "sets": 1,
+    "reps": "25 min",
+    "instructions": [
+      "Ride on a safe route at a steady effort.",
+      "Keep your cadence smooth and your grip relaxed.",
+      "Use easier gears before climbs to avoid sudden strain."
+    ],
+    "source": "CDC physical activity guidance",
+    "source_url": "https://www.cdc.gov/physical-activity-basics/measuring/index.html"
+  },
+  {
+    "id": "jogging",
+    "name": "Jogging",
+    "muscle_group": "cardio",
+    "training_types": ["cardio", "endurance", "legs"],
+    "workout_styles": ["conditioning", "hiit"],
+    "difficulty": "intermediate",
+    "equipment": "bodyweight",
+    "sets": 1,
+    "reps": "10 min",
+    "instructions": [
+      "Run at a controlled pace you can maintain.",
+      "Keep your steps light and your torso tall.",
+      "Slow to a walk if breathing becomes too hard to control."
+    ],
+    "source": "CDC physical activity guidance",
+    "source_url": "https://www.cdc.gov/physical-activity-basics/adding-adults/what-counts.html"
+  },
+  {
+    "id": "high-knees",
+    "name": "High Knees",
+    "muscle_group": "cardio",
+    "training_types": ["cardio", "endurance", "core"],
+    "workout_styles": ["hiit", "conditioning"],
+    "difficulty": "intermediate",
+    "equipment": "bodyweight",
+    "sets": 4,
+    "reps": "30 sec",
+    "instructions": [
+      "Run in place while lifting your knees toward hip height.",
+      "Keep your chest tall and arms moving.",
+      "Land softly and maintain a quick rhythm."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "jump-rope-basic",
+    "name": "Jump Rope",
+    "muscle_group": "cardio",
+    "training_types": ["cardio", "endurance", "legs"],
+    "workout_styles": ["hiit", "conditioning"],
+    "difficulty": "intermediate",
+    "equipment": "jump_rope",
+    "sets": 4,
+    "reps": "45 sec",
+    "instructions": [
+      "Keep your elbows close to your body.",
+      "Turn the rope mostly with your wrists.",
+      "Jump just high enough for the rope to pass under your feet."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "stair-climb",
+    "name": "Stair Climb",
+    "muscle_group": "legs",
+    "training_types": ["legs", "cardio", "endurance"],
+    "workout_styles": ["conditioning", "hiit"],
+    "difficulty": "intermediate",
+    "equipment": "stairs",
+    "sets": 5,
+    "reps": "45 sec",
+    "instructions": [
+      "Climb stairs at a steady pace.",
+      "Place your full foot on each step when possible.",
+      "Walk down carefully before starting the next interval."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "side-plank",
+    "name": "Side Plank",
+    "muscle_group": "core",
+    "training_types": ["core", "endurance", "strength"],
+    "workout_styles": ["strength", "mobility", "yoga"],
+    "difficulty": "beginner",
+    "equipment": "bodyweight",
+    "sets": 3,
+    "reps": "30 sec each side",
+    "instructions": [
+      "Lie on one side with your elbow under your shoulder.",
+      "Lift your hips until your body forms a straight line.",
+      "Hold while keeping your ribs and hips stacked."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "dead-bug",
+    "name": "Dead Bug",
+    "muscle_group": "core",
+    "training_types": ["core", "strength"],
+    "workout_styles": ["strength", "mobility"],
+    "difficulty": "beginner",
+    "equipment": "bodyweight",
+    "sets": 3,
+    "reps": "8 each side",
+    "instructions": [
+      "Lie on your back with arms up and knees bent.",
+      "Lower opposite arm and leg while keeping your lower back steady.",
+      "Return to the start and alternate sides."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "bird-dog",
+    "name": "Bird Dog",
+    "muscle_group": "core",
+    "training_types": ["core", "strength", "endurance"],
+    "workout_styles": ["mobility", "yoga", "strength"],
+    "difficulty": "beginner",
+    "equipment": "bodyweight",
+    "sets": 3,
+    "reps": "8 each side",
+    "instructions": [
+      "Start on hands and knees.",
+      "Extend opposite arm and leg while keeping your hips level.",
+      "Pause briefly, then return with control."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "russian-twist",
+    "name": "Russian Twist",
+    "muscle_group": "core",
+    "training_types": ["core", "endurance"],
+    "workout_styles": ["conditioning", "strength"],
+    "difficulty": "intermediate",
+    "equipment": "bodyweight",
+    "sets": 3,
+    "reps": "20",
+    "instructions": [
+      "Sit with your knees bent and torso slightly leaned back.",
+      "Rotate your torso from side to side.",
+      "Keep the movement controlled instead of swinging."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "wall-sit",
+    "name": "Wall Sit",
+    "muscle_group": "legs",
+    "training_types": ["legs", "endurance", "strength"],
+    "workout_styles": ["strength", "conditioning"],
+    "difficulty": "beginner",
+    "equipment": "bodyweight",
+    "sets": 3,
+    "reps": "45 sec",
+    "instructions": [
+      "Lean your back against a wall.",
+      "Slide down until your knees are bent and thighs are close to parallel.",
+      "Hold the position while keeping your knees over your feet."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "calf-raise",
+    "name": "Calf Raise",
+    "muscle_group": "legs",
+    "training_types": ["legs", "strength"],
+    "workout_styles": ["strength"],
+    "difficulty": "beginner",
+    "equipment": "bodyweight",
+    "sets": 3,
+    "reps": "15-20",
+    "instructions": [
+      "Stand tall with feet hip-width apart.",
+      "Rise onto the balls of your feet.",
+      "Lower slowly until your heels touch the floor."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "side-lunge",
+    "name": "Side Lunge",
+    "muscle_group": "legs",
+    "training_types": ["legs", "strength", "endurance"],
+    "workout_styles": ["strength", "mobility"],
+    "difficulty": "beginner",
+    "equipment": "bodyweight",
+    "sets": 3,
+    "reps": "8 each side",
+    "instructions": [
+      "Step to one side and bend that knee.",
+      "Keep the other leg straight and your chest lifted.",
+      "Push through the bent leg to return to standing."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "dumbbell-row",
+    "name": "Dumbbell Row",
+    "muscle_group": "back",
+    "training_types": ["arms", "strength"],
+    "workout_styles": ["strength"],
+    "difficulty": "beginner",
+    "equipment": "dumbbells",
+    "sets": 3,
+    "reps": "8-12 each side",
+    "instructions": [
+      "Hinge at the hips with one hand supported if needed.",
+      "Pull the dumbbell toward your ribs.",
+      "Lower with control without twisting your torso."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "dumbbell-shoulder-press",
+    "name": "Dumbbell Shoulder Press",
+    "muscle_group": "shoulders",
+    "training_types": ["arms", "strength"],
+    "workout_styles": ["strength"],
+    "difficulty": "beginner",
+    "equipment": "dumbbells",
+    "sets": 3,
+    "reps": "8-12",
+    "instructions": [
+      "Hold dumbbells at shoulder height.",
+      "Press them overhead without arching your lower back.",
+      "Lower back to shoulder height with control."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "biceps-curl",
+    "name": "Biceps Curl",
+    "muscle_group": "arms",
+    "training_types": ["arms", "strength"],
+    "workout_styles": ["strength"],
+    "difficulty": "beginner",
+    "equipment": "dumbbells",
+    "sets": 3,
+    "reps": "10-12",
+    "instructions": [
+      "Stand tall with dumbbells by your sides.",
+      "Curl the weights toward your shoulders.",
+      "Lower slowly while keeping your elbows close to your body."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "dumbbell-deadlift",
+    "name": "Dumbbell Deadlift",
+    "muscle_group": "legs",
+    "training_types": ["legs", "core", "strength"],
+    "workout_styles": ["strength"],
+    "difficulty": "beginner",
+    "equipment": "dumbbells",
+    "sets": 3,
+    "reps": "8-12",
+    "instructions": [
+      "Hold dumbbells in front of your thighs.",
+      "Hinge at the hips while keeping your back neutral.",
+      "Drive through your feet to stand tall again."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "kettlebell-swing",
+    "name": "Kettlebell Swing",
+    "muscle_group": "full body",
+    "training_types": ["legs", "core", "cardio", "strength"],
+    "workout_styles": ["strength", "hiit", "conditioning"],
+    "difficulty": "intermediate",
+    "equipment": "kettlebell",
+    "sets": 4,
+    "reps": "30 sec",
+    "instructions": [
+      "Hinge at your hips with the kettlebell between your legs.",
+      "Drive your hips forward to swing the bell to chest height.",
+      "Let the bell return between your legs while keeping your back neutral."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "band-pull-apart",
+    "name": "Band Pull Apart",
+    "muscle_group": "back",
+    "training_types": ["arms", "strength"],
+    "workout_styles": ["strength", "mobility"],
+    "difficulty": "beginner",
+    "equipment": "resistance_band",
+    "sets": 3,
+    "reps": "12-15",
+    "instructions": [
+      "Hold a resistance band at chest height.",
+      "Pull the band apart until your hands move toward your sides.",
+      "Return slowly while keeping your shoulders down."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "assisted-pull-up",
+    "name": "Assisted Pull Up",
+    "muscle_group": "back",
+    "training_types": ["arms", "core", "strength"],
+    "workout_styles": ["strength"],
+    "difficulty": "intermediate",
+    "equipment": "pull_up_bar",
+    "sets": 3,
+    "reps": "4-8",
+    "instructions": [
+      "Grip the bar slightly wider than shoulder-width.",
+      "Pull your chest toward the bar while bracing your core.",
+      "Lower under control to a full hang."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "leg-press",
+    "name": "Leg Press",
+    "muscle_group": "legs",
+    "training_types": ["legs", "strength"],
+    "workout_styles": ["strength"],
+    "difficulty": "beginner",
+    "equipment": "machine",
+    "sets": 3,
+    "reps": "10-12",
+    "instructions": [
+      "Place your feet on the platform about hip-width apart.",
+      "Lower the weight until your knees bend comfortably.",
+      "Press through your feet without locking your knees hard."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  },
+  {
+    "id": "lat-pulldown",
+    "name": "Lat Pulldown",
+    "muscle_group": "back",
+    "training_types": ["arms", "strength"],
+    "workout_styles": ["strength"],
+    "difficulty": "beginner",
+    "equipment": "machine",
+    "sets": 3,
+    "reps": "8-12",
+    "instructions": [
+      "Grip the bar wider than shoulder-width.",
+      "Pull the bar toward your upper chest.",
+      "Control the bar back up without shrugging your shoulders."
+    ],
+    "source": "Sample seed data",
+    "source_url": ""
+  }
+]

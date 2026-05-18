@@ -1,0 +1,10 @@
+{
+  "email": "",
+  "exercisesPerEmail": 3,
+  "timesPerWeek": 4,
+  "weightKg": "",
+  "heightCm": "",
+  "availableEquipment": ["bodyweight"],
+  "trainingPool": ["arms", "core", "legs", "endurance", "cardio", "strength"],
+  "workoutStyles": ["strength", "hiit", "conditioning", "mobility", "yoga"]
+}
