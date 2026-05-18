@@ -40,6 +40,9 @@ const loginForm = document.querySelector("#login-form");
 const loginUser = document.querySelector("#login-user");
 const loginPass = document.querySelector("#login-pass");
 const loginError = document.querySelector("#login-error");
+const loginEyebrow = document.querySelector("#login-eyebrow");
+const loginSubtitle = document.querySelector("#login-subtitle");
+const loginNote = document.querySelector("#login-note");
 const logoutButton = document.querySelector("#logout-button");
 
 
@@ -123,6 +126,18 @@ function showLoginScreen() {
   loginScreen.classList.remove("is-hidden");
 }
 
+function renderLoginCopy() {
+  loginEyebrow.textContent = serverAuthEnabled ? "Private Access" : "Sandbox Access";
+  loginSubtitle.textContent = serverAuthEnabled
+    ? "Enter your private Hunter ID to receive and manage Daily Quests."
+    : "Use the demo gate to enter the public portfolio version.";
+  loginUser.placeholder = serverAuthEnabled ? "hunter id" : "demo";
+  loginPass.placeholder = serverAuthEnabled ? "access code" : "demo";
+  loginNote.textContent = serverAuthEnabled
+    ? "Private mode protects your settings and generated quests on this server."
+    : "Sandbox only. Production authentication should use Supabase Auth.";
+}
+
 async function authStatus() {
   try {
     const response = await fetch(`/api/auth/status?ts=${Date.now()}`);
@@ -190,6 +205,7 @@ async function handleLogout() {
 async function initializeAuth() {
   const status = await authStatus();
   serverAuthEnabled = Boolean(status.authEnabled);
+  renderLoginCopy();
 
   if (serverAuthEnabled) {
     if (status.authenticated) {

@@ -10,9 +10,9 @@
 
     <section class="login-screen" id="login-screen">
       <form class="login-panel" id="login-form">
-        <p class="eyebrow">Sandbox Access</p>
+        <p class="eyebrow" id="login-eyebrow">Sandbox Access</p>
         <h1>Awakening System</h1>
-        <p class="subtitle">Use the demo gate to enter the public portfolio version.</p>
+        <p class="subtitle" id="login-subtitle">Use the demo gate to enter the public portfolio version.</p>
         <label>
           <span>Hunter ID</span>
           <input id="login-user" type="text" autocomplete="username" placeholder="demo">
@@ -23,7 +23,7 @@
         </label>
         <p class="login-error" id="login-error"></p>
         <button type="submit">Enter System</button>
-        <p class="login-note">Sandbox only. Production authentication should use Supabase Auth.</p>
+        <p class="login-note" id="login-note">Sandbox only. Production authentication should use Supabase Auth.</p>
       </form>
     </section>
     <main class="system-shell is-hidden" id="app-shell">
