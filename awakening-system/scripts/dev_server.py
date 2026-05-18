@@ -8,6 +8,7 @@ letting the UI update the Python scripts' input data.
 from __future__ import annotations
 
 import json
+import os
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
@@ -32,6 +33,16 @@ class AwakeningHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self) -> None:
         request_path = urlparse(self.path).path
+        if request_path == "/healthz":
+            self.send_json({"ok": True})
+            return
+
+        if request_path == "/":
+            self.send_response(302)
+            self.send_header("Location", "/web/index.html")
+            self.end_headers()
+            return
+
         if request_path == "/api/settings":
             if not SETTINGS_PATH.exists():
                 self.send_json({})
@@ -65,8 +76,15 @@ class AwakeningHandler(SimpleHTTPRequestHandler):
 
 
 def main() -> None:
-    server = ThreadingHTTPServer(("127.0.0.1", 8001), AwakeningHandler)
-    print("Serving Awakening System on http://127.0.0.1:8001/")
+    # Render provides PORT at runtime and requires services to bind to 0.0.0.0.
+    # Local development still defaults to http://127.0.0.1:8001/.
+    host = os.environ.get("HOST", "127.0.0.1")
+    port = int(os.environ.get("PORT", "8001"))
+    if os.environ.get("RENDER"):
+        host = "0.0.0.0"
+
+    server = ThreadingHTTPServer((host, port), AwakeningHandler)
+    print(f"Serving Awakening System on http://{host}:{port}/")
     server.serve_forever()
 
 

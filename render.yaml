@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: awakening-system
+    runtime: python
+    plan: free
+    rootDir: awakening-system
+    buildCommand: python3 -m py_compile scripts/dev_server.py scripts/generate_daily_quest.py scripts/send_daily_email.py scripts/scrape_exercises.py
+    startCommand: python3 scripts/dev_server.py
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.9
+      - key: EMAIL_ENABLED
+        value: "false"
