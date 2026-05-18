@@ -404,13 +404,17 @@ function demoExpiryKey(quest) {
 }
 
 function effectiveExpiresAt(quest) {
-  const actualExpiry = new Date(quest.expires_at).getTime();
+  const expiresAt = new Date(quest.expires_at).getTime();
+  const issuedAt = new Date(quest.issued_at).getTime();
+  const fallbackExpiry = Number.isFinite(issuedAt) ? issuedAt + 24 * 60 * 60 * 1000 : NaN;
+  const actualExpiry = Number.isFinite(expiresAt) ? expiresAt : fallbackExpiry;
+
   if (Number.isFinite(actualExpiry) && actualExpiry > Date.now()) {
     return actualExpiry;
   }
 
   if (serverAuthEnabled || !quest.id) {
-    return actualExpiry;
+    return Number.isFinite(actualExpiry) ? actualExpiry : Date.now();
   }
 
   const key = demoExpiryKey(quest);
@@ -560,11 +564,27 @@ function clearTimerInterval() {
 }
 
 function setTimerStep(index) {
-  timerState.stepIndex = Math.min(index, Math.max(timerState.steps.length - 1, 0));
+  const lastIndex = Math.max(timerState.steps.length - 1, 0);
+  timerState.stepIndex = Math.min(Math.max(index, 0), lastIndex);
   const step = currentTimerStep();
   timerState.duration = step?.duration || 0;
   timerState.remaining = timerState.duration;
   renderTimer();
+}
+
+function selectTimerExercise(exerciseId) {
+  if (!timerState.steps.length) {
+    resetTimer();
+  }
+
+  const stepIndex = timerState.steps.findIndex(
+    (step) => step.type === "exercise" && step.exerciseId === exerciseId,
+  );
+  if (stepIndex === -1) return;
+
+  pauseTimer();
+  timerState.finished = false;
+  setTimerStep(stepIndex);
 }
 
 function resetTimer() {
@@ -696,10 +716,11 @@ function renderTimer() {
   const activeCard = document.querySelector(`[data-exercise-id="${step.exerciseId}"]`);
   if (activeCard) {
     const elapsed = step.duration ? step.duration - timerState.remaining : 0;
-    const progressDegrees = step.duration ? Math.round((elapsed / step.duration) * 360) : 360;
+    const isSelected = !timerState.running && elapsed === 0;
+    const progressDegrees = isSelected ? 360 : step.duration ? Math.round((elapsed / step.duration) * 360) : 360;
     activeCard.classList.add("active");
     activeCard.style.setProperty("--timer-progress", `${progressDegrees}deg`);
-    activeCard.style.setProperty("--timer-color", step.duration ? "var(--cyan)" : "var(--success)");
+    activeCard.style.setProperty("--timer-color", isSelected || !step.duration ? "var(--success)" : "var(--cyan)");
   }
 }
 
@@ -724,15 +745,28 @@ function renderQuest() {
   questList.innerHTML = "";
 
   activeQuest.exercises.forEach((exercise) => {
-    const card = document.createElement("label");
+    const card = document.createElement("article");
     card.className = "quest-card";
     card.dataset.exerciseId = exercise.id;
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", `Select ${exercise.name} in the quest timer`);
     if (completed.has(exercise.id)) {
       card.classList.add("done");
     }
+    card.addEventListener("click", (event) => {
+      if (event.target === checkbox) return;
+      selectTimerExercise(exercise.id);
+    });
+    card.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      selectTimerExercise(exercise.id);
+    });
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
+    checkbox.setAttribute("aria-label", `Mark ${exercise.name} as complete`);
     checkbox.checked = completed.has(exercise.id);
     checkbox.addEventListener("change", () => {
       if (checkbox.checked) {
