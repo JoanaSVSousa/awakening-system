@@ -82,6 +82,8 @@ const styleChoices = {
 let activeQuest = null;
 let completed = new Set();
 let audioContext = null;
+let serverAuthEnabled = false;
+let summaryIntervalId = null;
 let timerState = {
   steps: [],
   stepIndex: 0,
@@ -103,10 +105,10 @@ const defaultSettings = {
 };
 
 
-// Sandbox authentication -----------------------------------------------------
-// This is intentionally lightweight: it demonstrates the login flow for the
-// public portfolio version. The private deployed version should replace this
-// with Supabase Auth so identities and sessions are verified server-side.
+// Authentication -------------------------------------------------------------
+// The public portfolio build keeps a permissive sandbox login. When
+// AUTH_ENABLED=true on the Python server, the same form is checked against
+// APP_USER and APP_PASS from the private .env/Render environment variables.
 function isSandboxAuthenticated() {
   return localStorage.getItem("awakening-sandbox-auth") === "true";
 }
@@ -121,28 +123,85 @@ function showLoginScreen() {
   loginScreen.classList.remove("is-hidden");
 }
 
-function handleSandboxLogin(event) {
-  event.preventDefault();
+async function authStatus() {
+  try {
+    const response = await fetch(`/api/auth/status?ts=${Date.now()}`);
+    if (!response.ok) return { available: false, authEnabled: false, authenticated: false };
+    return { available: true, ...(await response.json()) };
+  } catch {
+    return { available: false, authEnabled: false, authenticated: false };
+  }
+}
 
-  if (!loginUser.value.trim() || !loginPass.value.trim()) {
-    loginError.textContent = "Enter any demo Hunter ID and access code.";
+async function handleLogin(event) {
+  event.preventDefault();
+  const username = loginUser.value.trim();
+  const password = loginPass.value.trim();
+
+  if (!username || !password) {
+    loginError.textContent = serverAuthEnabled
+      ? "Enter your Hunter ID and access code."
+      : "Enter any demo Hunter ID and access code.";
     return;
   }
 
+  try {
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (response.ok) {
+      localStorage.setItem("awakening-sandbox-auth", "true");
+      localStorage.setItem("awakening-sandbox-user", username);
+      loginError.textContent = "";
+      showAuthenticatedApp();
+      startQuestLoad();
+      return;
+    }
+
+    if (serverAuthEnabled) {
+      loginError.textContent = "Invalid Hunter ID or access code.";
+      return;
+    }
+  } catch {
+    // Opening the HTML directly has no API; the demo login still works locally.
+  }
+
   localStorage.setItem("awakening-sandbox-auth", "true");
-  localStorage.setItem("awakening-sandbox-user", loginUser.value.trim());
+  localStorage.setItem("awakening-sandbox-user", username);
   loginError.textContent = "";
   showAuthenticatedApp();
   startQuestLoad();
 }
 
-function handleSandboxLogout() {
+async function handleLogout() {
   pauseTimer();
   localStorage.removeItem("awakening-sandbox-auth");
+  try {
+    await fetch("/api/auth/logout", { method: "POST" });
+  } catch {
+    // Static demo fallback has no logout endpoint.
+  }
   showLoginScreen();
 }
 
-function initializeAuth() {
+async function initializeAuth() {
+  const status = await authStatus();
+  serverAuthEnabled = Boolean(status.authEnabled);
+
+  if (serverAuthEnabled) {
+    if (status.authenticated) {
+      showAuthenticatedApp();
+      startQuestLoad();
+    } else {
+      localStorage.removeItem("awakening-sandbox-auth");
+      showLoginScreen();
+    }
+    return;
+  }
+
   if (isSandboxAuthenticated()) {
     showAuthenticatedApp();
     startQuestLoad();
@@ -324,8 +383,37 @@ function readSettingsForm() {
   };
 }
 
-function formatRemaining(expiresAt) {
-  const remaining = new Date(expiresAt).getTime() - Date.now();
+function demoExpiryKey(quest) {
+  return `awakening-demo-expiry-${quest.id}`;
+}
+
+function effectiveExpiresAt(quest) {
+  const actualExpiry = new Date(quest.expires_at).getTime();
+  if (Number.isFinite(actualExpiry) && actualExpiry > Date.now()) {
+    return actualExpiry;
+  }
+
+  if (serverAuthEnabled || !quest.id) {
+    return actualExpiry;
+  }
+
+  const key = demoExpiryKey(quest);
+  const savedExpiry = Number(localStorage.getItem(key));
+  if (Number.isFinite(savedExpiry) && savedExpiry > Date.now()) {
+    return savedExpiry;
+  }
+
+  const refreshedExpiry = Date.now() + 24 * 60 * 60 * 1000;
+  localStorage.setItem(key, String(refreshedExpiry));
+  return refreshedExpiry;
+}
+
+function remainingMilliseconds(quest) {
+  return Math.max(0, effectiveExpiresAt(quest) - Date.now());
+}
+
+function formatRemaining(quest) {
+  const remaining = remainingMilliseconds(quest);
   if (remaining <= 0) {
     return "00:00:00";
   }
@@ -605,8 +693,9 @@ function updateSummary() {
   const total = activeQuest.exercises.length;
   const done = completed.size;
   progress.textContent = `${done}/${total}`;
-  countdown.textContent = formatRemaining(activeQuest.expires_at);
-  questStatus.textContent = done === total ? "Complete" : "Active";
+  countdown.textContent = formatRemaining(activeQuest);
+  const expired = remainingMilliseconds(activeQuest) <= 0;
+  questStatus.textContent = done === total ? "Complete" : expired ? "Expired" : "Active";
   questFocus.textContent = activeQuest.focus_label || "Mixed";
   if (done === total) {
     awardQuestPoints();
@@ -752,9 +841,21 @@ function selectCurrentQuest(quests) {
 
 
 // Startup and event wiring ---------------------------------------------------
-async function loadQuest() {
+async function fetchQuests() {
+  try {
+    const response = await fetch(`/api/quests?ts=${Date.now()}`);
+    if (response.ok) return response.json();
+    if (response.status === 401) throw new Error("Authentication required.");
+  } catch (error) {
+    if (serverAuthEnabled) throw error;
+  }
+
   const response = await fetch(`../data/quests.json?ts=${Date.now()}`);
-  const quests = await response.json();
+  return response.json();
+}
+
+async function loadQuest() {
+  const quests = await fetchQuests();
   activeQuest = selectCurrentQuest(quests);
 
   if (!activeQuest) {
@@ -766,7 +867,8 @@ async function loadQuest() {
   loadProgress();
   resetTimer();
   renderQuest();
-  setInterval(updateSummary, 1000);
+  if (summaryIntervalId) clearInterval(summaryIntervalId);
+  summaryIntervalId = setInterval(updateSummary, 1000);
 }
 
 function startQuestLoad() {
@@ -808,8 +910,8 @@ timerReset.addEventListener("click", () => {
 });
 
 
-loginForm.addEventListener("submit", handleSandboxLogin);
-logoutButton.addEventListener("click", handleSandboxLogout);
+loginForm.addEventListener("submit", handleLogin);
+logoutButton.addEventListener("click", handleLogout);
 
 openSettings.addEventListener("click", async () => {
   renderSettings(await loadServerSettings());
