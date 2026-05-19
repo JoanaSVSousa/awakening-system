@@ -11,6 +11,8 @@ import hmac
 import json
 import os
 import secrets
+import sys
+from datetime import datetime, timezone
 from http import cookies
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -18,7 +20,19 @@ from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPTS_DIR = ROOT / "scripts"
+if str(SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS_DIR))
+
+from generate_daily_quest import (  # noqa: E402
+    build_daily_quest,
+    load_json,
+    load_user_settings,
+    save_json,
+)
+
 SETTINGS_PATH = ROOT / "data" / "user_settings.json"
+EXERCISES_PATH = ROOT / "data" / "exercises.json"
 QUESTS_PATH = ROOT / "data" / "quests.json"
 ENV_PATH = ROOT / ".env"
 SESSION_COOKIE = "awakening_session"
@@ -48,6 +62,33 @@ def env_flag(name: str, default: bool = False) -> bool:
 
 def auth_enabled() -> bool:
     return env_flag("AUTH_ENABLED", default=False)
+
+
+def quest_is_active(quest: dict) -> bool:
+    try:
+        expires_at = datetime.fromisoformat(str(quest.get("expires_at", "")))
+    except ValueError:
+        return False
+
+    if expires_at.tzinfo is None:
+        expires_at = expires_at.replace(tzinfo=timezone.utc)
+    return expires_at > datetime.now(timezone.utc)
+
+
+def load_or_create_active_quests() -> list[dict]:
+    quests = load_json(QUESTS_PATH, [])
+    if quests and quest_is_active(quests[0]):
+        return quests
+
+    exercises = load_json(EXERCISES_PATH, [])
+    settings = load_user_settings()
+    today = datetime.now().date()
+    today_id = f"quest-{today.strftime('%Y%m%d')}"
+    previous_quests = [quest for quest in quests if quest.get("id") != today_id]
+    active_quest = build_daily_quest(exercises, settings, previous_quests, today)
+    refreshed_quests = [active_quest, *previous_quests]
+    save_json(QUESTS_PATH, refreshed_quests)
+    return refreshed_quests
 
 
 class AwakeningHandler(SimpleHTTPRequestHandler):
@@ -130,12 +171,14 @@ class AwakeningHandler(SimpleHTTPRequestHandler):
         if request_path == "/api/quests":
             if not self.require_authentication():
                 return
-            if not QUESTS_PATH.exists():
-                self.send_json([])
+
+            try:
+                quests = load_or_create_active_quests() if auth_enabled() else load_json(QUESTS_PATH, [])
+            except (OSError, ValueError, SystemExit) as error:
+                self.send_json({"error": str(error) or "Unable to prepare an active quest."}, status=500)
                 return
 
-            with QUESTS_PATH.open("r", encoding="utf-8") as file:
-                self.send_json(json.load(file))
+            self.send_json(quests)
             return
 
         if auth_enabled() and request_path.startswith("/data/"):
